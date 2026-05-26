@@ -1,8 +1,26 @@
-import requests, os
+import requests, os, sys
 
 user = os.environ.get("GITHUB_USER", "emersonaparecidosilva")
-res = requests.get(f"https://api.github.com/users/{user}/repos?per_page=100&sort=updated")
-repos = [r for r in res.json() if not r["fork"] and r["name"] != f"{user}.github.io"]
+
+headers = {
+    "User-Agent": "portfolio-generator",
+    "Accept": "application/vnd.github+json",
+}
+
+res = requests.get(
+    f"https://api.github.com/users/{user}/repos?per_page=100&sort=updated",
+    headers=headers
+)
+
+data = res.json()
+
+# Mostra o retorno da API se não for lista (facilita debug)
+if not isinstance(data, list):
+    print(f"❌ Erro da API do GitHub: {data}")
+    sys.exit(1)
+
+repos = [r for r in data if not r["fork"] and r["name"] != f"{user}.github.io"]
+
 
 langs = sorted(set(r.get("language") or "Outro" for r in repos))
 n_langs = len(langs)
