@@ -169,7 +169,6 @@ html = f"""<!DOCTYPE html>
       <div class="avatar-ring"></div>
     </div>
     <div class="header-info">
-      <div class="badge">disponível para colaborações</div>
       <h1>Emerson Silva</h1>
       <p class="role">Data Analytics · Data Science · Power BI</p>
       <div class="stats">
