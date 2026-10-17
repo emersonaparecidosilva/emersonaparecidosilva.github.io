@@ -1,4 +1,6 @@
 name: Update Portfolio
+permissions:
+  contents: write
 
 on:
   schedule:
