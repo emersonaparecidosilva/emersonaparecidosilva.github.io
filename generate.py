@@ -6,6 +6,9 @@ headers = {
     "User-Agent": "portfolio-generator",
     "Accept": "application/vnd.github+json",
 }
+token = os.environ.get("GITHUB_TOKEN")
+if token:
+    headers["Authorization"] = f"Bearer {token}"
 
 res = requests.get(
     f"https://api.github.com/users/{user}/repos?per_page=100&sort=updated",
@@ -64,7 +67,8 @@ for r in repos:
     readme = fetch_readme(name)
     if readme:
         # Escapa para JSON seguro
-        readme_escaped = readme.replace("\\", "\\\\").replace("`", "\\`").replace("${", "\\${")
+        readme_escaped = (readme.replace("\\", "\\\\").replace("`", "\\`")
+                        .replace("${", "\\${").replace("</", "<\\/"))
         readmes_js[name] = readme_escaped
         detail_btn = f'<button class="detail-btn" onclick="showReadme(\'{name}\')">ver detalhes →</button>'
     else:
