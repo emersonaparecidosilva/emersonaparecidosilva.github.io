@@ -1,37 +1,38 @@
 name: Update Portfolio
-permissions:
-  contents: write
 
 on:
   schedule:
-    - cron: '0 3 * * *'   # Roda todo dia às 3h da manhã
+    - cron: '17 3 * * *'   # minuto "quebrado" evita o pico da hora cheia
   push:
-    branches: [main]       # Também roda a cada push
-  workflow_dispatch:       # Permite rodar manualmente
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: write            # necessário para o keepalive
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4 # Atualizado para v4
-
-      - name: Set up Python
-        uses: actions/setup-python@v5 # Atualizado para v5
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
         with:
-          python-version: '3.11'
-
-      - name: Install requests
-        run: pip install requests
-
+          python-version: '3.12'
+      - run: pip install requests
       - name: Generate portfolio
         run: python generate.py
         env:
           GITHUB_USER: emersonaparecidosilva
-
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Commit and push if changed
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add index.html
           git diff --cached --quiet || git commit -m "🤖 Portfólio atualizado automaticamente"
-          git push # O checkout@v4 já injeta a credencial longa de forma segura e invisível
+          git push
+      - name: Keepalive (evita desativação após 60 dias)
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh workflow enable update-portfolio.yml
