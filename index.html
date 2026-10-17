@@ -138,7 +138,7 @@
       <h1>Emerson Silva</h1>
       <p class="role">Data Analytics · Data Science · Power BI</p>
       <div class="stats">
-        <div class="stat"><span class="stat-num">7</span><span class="stat-label">projetos</span></div>
+        <div class="stat"><span class="stat-num">8</span><span class="stat-label">projetos</span></div>
         <div class="stat"><span class="stat-num">1</span><span class="stat-label">linguagens</span></div>
       </div>
       <div class="links">
@@ -160,6 +160,16 @@
 
   <main>
     <div class="grid">
+    <div class="card" data-lang="Python">
+      <div class="card-top" style="background:#4d9cf0"></div>
+      <div class="card-body">
+        <div class="card-lang">Python</div>
+        <h3><a href="https://github.com/emersonaparecidosilva/vaar-nacional-oficial" target="_blank">vaar-nacional-oficial</a></h3>
+        <p>Sem descrição</p>
+        <div class="card-footer"><span class="pill">Python</span><span class="upd">2026-10-17</span></div>
+        <div class="card-actions"><button class="detail-btn" onclick="showReadme('vaar-nacional-oficial')">ver detalhes →</button></div>
+      </div>
+    </div>
     <div class="card" data-lang="Python">
       <div class="card-top" style="background:#4d9cf0"></div>
       <div class="card-body">
@@ -233,7 +243,7 @@
   </main>
 
   <footer>
-    atualizado automaticamente via github actions &nbsp;·&nbsp; 7 repositórios
+    atualizado automaticamente via github actions &nbsp;·&nbsp; 8 repositórios
   </footer>
 
   <!-- MODAL -->
@@ -254,6 +264,135 @@
 
   <script>
     const readmes = {
+  "vaar-nacional-oficial": `# VAAR Nacional
+
+Aplicação para acompanhar e simular a **Complementação da União ao Fundeb por
+resultados (VAAR)** nos municípios brasileiros e nas 27 redes estaduais.
+
+Projeto Integrador V.
+
+---
+
+## O que é o VAAR
+
+O VAAR (Valor Aluno Ano por Resultado) corresponde a **2,5 pontos percentuais**
+do total do Fundeb (EC 108/2020, art. 212-A, V, "c"). É distribuído aos entes
+que cumprem as **cinco condicionalidades** do art. 14 da Lei 14.113/2020 e que
+apresentam melhoria nos indicadores educacionais.
+
+A complementação é dividida em duas parcelas iguais
+(NT 3/2026/CGEFE/DIRED-INEP, aprovada pela Resolução CIF 25/2026):
+
+| Parcela | Peso | O que mede |
+|---|---|---|
+| VAAR-Atendimento | 50% | permanência do estudante, via Censo Escolar |
+| VAAR-Aprendizagem | 50% | Saeb ponderado por aprovação e equidade |
+
+Em cada parcela, \`VAAR_r = C_r × Total_da_parcela\`, onde \`C_r\` é o coeficiente
+de distribuição do ente, proporcional à melhoria que apresentou.
+
+## Escopo
+
+**Exclusivamente nacional.** As páginas e fórmulas do ICMS Educacional de Minas
+Gerais (Lei estadual 24.431/2023, índices IQE e IE) foram removidas: são de
+competência estadual e não possuem equivalente nacional. Cada unidade da
+federação legisla o próprio ICMS Educacional, com índices e percentuais
+próprios. Esse conteúdo permanece no histórico do Git.
+
+## Dados
+
+**Nenhum valor monetário está escrito no código.** Todos vêm da fonte oficial:
+
+> Portaria Interministerial MEC/MF nº 14, de 29 de dezembro de 2025
+> Anexo VI, Redes de Ensino Beneficiadas e Valores Distribuídos
+> Anexo VII, Cronograma de Desembolso
+> Total distribuído em 2026: **R$ 7.526.118.016,16**
+
+O script de carga confere a soma extraída contra o total declarado na portaria
+e **falha sem gravar** se a diferença passar de R$ 100.
+
+| Arquivo | Conteúdo |
+|---|---|
+| \`data/processed/vaar_nacional.parquet\` | 5.598 entes: municípios do IBGE mais as 27 redes estaduais, com coeficiente e valor |
+| \`data/processed/cronograma_vaar_nacional.parquet\` | 3.025 cronogramas com as 13 parcelas de desembolso |
+| \`data/processed/municipios_brasil.parquet\` | lista de municípios da API do IBGE |
+| \`data/geo/ufs_brasil.geojson\` | malha das unidades da federação (IBGE) |
+
+## Como rodar
+
+\`\`\`bash
+python -m venv .venv
+.venv\\Scripts\\activate
+pip install -r requirements.txt
+streamlit run app.py
+\`\`\`
+
+Para reconstruir a base a partir da portaria:
+
+\`\`\`bash
+python scripts/construir_base_nacional.py --pdf caminho/Portaria_mec_14_2025.pdf
+\`\`\`
+
+## Estrutura
+
+\`\`\`
+app.py                            página inicial
+pages/
+  1_Panorama_Nacional.py          situação por região e UF, mapa, ranking
+  2_Calculadora.py                consulta por ente e simulador de rateio
+calculadora/
+  formulas.py                     fórmulas do VAAR e do rateio
+  calc_vaar.py                    cálculo por conjunto de entes
+scraper/                          coletores FNDE e Inep (escopo nacional)
+scripts/
+  construir_base_nacional.py      extrai a portaria e monta a base
+utils/                            configuração, cache, formatação, validação
+\`\`\`
+
+## Escopo de coleta
+
+\`utils/config.py\` traz \`UF_ESCOPO\`, que vale \`None\` por padrão, ou seja,
+**nacional**. Definir uma sigla, por exemplo \`"MG"\`, restringe a coleta àquela
+unidade da federação. Isso serve para recortes de análise, nunca como escopo do
+projeto.
+
+## O que a calculadora faz, e o que não faz
+
+**Não recalcula os indicadores VAAR do Inep.** Eles dependem de microdados do
+Saeb e do Censo Escolar e de faixas de flutuação que o Inep define a priori por
+simulação e não publica como fórmula fechada. Qualquer recálculo produziria
+número diferente do oficial.
+
+**Opera sobre os coeficientes já publicados.** Remover entes do rateio é
+aritmética exata, porque os coeficientes somam 1 e basta renormalizar. Incluir
+um ente hoje excluído exige arbitrar uma melhoria hipotética, e o resultado é
+apresentado como cenário, não como previsão.
+
+## Base legal
+
+- EC 108/2020, art. 212-A, V, "c"
+- Lei 14.113/2020, art. 14 (condicionalidades e indicadores)
+- Lei 14.276/2021 e Lei 14.711/2023 (alterações)
+- Decreto 10.656/2021
+- Resoluções CIF 15/2025, 17/2025, 24/2026 e 25/2026
+- NT 3/2026/CGEFE/DIRED-INEP (metodologia dos indicadores)
+- Portaria Interministerial MEC/MF 14/2025 (valores de 2026)
+
+## Limitações conhecidas
+
+1. **Apenas o exercício de 2026.** Para 2024 e 2025 é preciso rodar os
+   coletores ou obter as portarias correspondentes. As fontes já são nacionais.
+2. **Resíduo de arredondamento.** O valor publicado no PDF e
+   \`coeficiente × total\` diferem em R$ 7,54 somados sobre 3.034 entes, no
+   máximo R$ 3,42 numa linha. É inerente à extração do PDF.
+3. **Mapa por unidade da federação**, não por município. A malha municipal
+   nacional tem 5.570 polígonos e pesaria demais no carregamento.
+4. **Sem suíte de testes.** A anterior validava o modelo estadual e foi
+   removida. Uma suíte nacional ainda precisa ser escrita.
+5. **Workflow de coleta removido.** O agendamento diário automatizava o
+   pipeline estadual, que não existe mais. Um workflow nacional precisa ser
+   desenhado.
+`,
   "anotacoes-pessoais": `# 📘 Guia de Instalação e Execução do Aplicativo
 
 Olá! Este é um guia completo para você configurar e rodar o seu novo aplicativo de anotações particulares, ele foi desenvolvimento em Python, utilizando a biblioteca Streamlit e o MongoDB como banco de dados. Além disso, tem MFA.
