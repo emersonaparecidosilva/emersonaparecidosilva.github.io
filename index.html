@@ -138,7 +138,7 @@
       <h1>Emerson Silva</h1>
       <p class="role">Data Analytics · Data Science · Power BI</p>
       <div class="stats">
-        <div class="stat"><span class="stat-num">11</span><span class="stat-label">projetos</span></div>
+        <div class="stat"><span class="stat-num">12</span><span class="stat-label">projetos</span></div>
         <div class="stat"><span class="stat-num">2</span><span class="stat-label">linguagens</span></div>
       </div>
       <div class="links">
@@ -164,10 +164,10 @@
       <div class="card-top" style="background:#f07a4d"></div>
       <div class="card-body">
         <div class="card-lang">HTML</div>
-        <h3><a href="https://github.com/emersonaparecidosilva/dontpad" target="_blank">dontpad</a></h3>
-        <p>Clone do Dontpad feito com Flask e MongoDB</p>
-        <div class="card-footer"><span class="pill">HTML</span><span class="upd">2026-11-12</span></div>
-        <div class="card-actions"><button class="detail-btn" onclick="showReadme('dontpad')">ver detalhes →</button></div>
+        <h3><a href="https://github.com/emersonaparecidosilva/centralizador-vercel" target="_blank">centralizador-vercel</a></h3>
+        <p>Sem descrição</p>
+        <div class="card-footer"><span class="pill">HTML</span><span class="upd">2026-11-16</span></div>
+        <div class="card-actions"><button class="detail-btn" onclick="showReadme('centralizador-vercel')">ver detalhes →</button></div>
       </div>
     </div>
     <div class="card" data-lang="Python">
@@ -175,9 +175,19 @@
       <div class="card-body">
         <div class="card-lang">Python</div>
         <h3><a href="https://github.com/emersonaparecidosilva/centralizador-simples" target="_blank">centralizador-simples</a></h3>
-        <p>Centralizador de Projetos em quadros</p>
+        <p>Centralizador de Projetos em Quadros com Streamlit</p>
         <div class="card-footer"><span class="pill">Python</span><span class="upd">2026-10-24</span></div>
         <div class="card-actions"><button class="detail-btn" onclick="showReadme('centralizador-simples')">ver detalhes →</button></div>
+      </div>
+    </div>
+    <div class="card" data-lang="HTML">
+      <div class="card-top" style="background:#f07a4d"></div>
+      <div class="card-body">
+        <div class="card-lang">HTML</div>
+        <h3><a href="https://github.com/emersonaparecidosilva/dontpad" target="_blank">dontpad</a></h3>
+        <p>Clone do Dontpad feito com Flask e MongoDB</p>
+        <div class="card-footer"><span class="pill">HTML</span><span class="upd">2026-11-12</span></div>
+        <div class="card-actions"><button class="detail-btn" onclick="showReadme('dontpad')">ver detalhes →</button></div>
       </div>
     </div>
     <div class="card" data-lang="Python">
@@ -273,7 +283,7 @@
   </main>
 
   <footer>
-    atualizado automaticamente via github actions &nbsp;·&nbsp; 11 repositórios
+    atualizado automaticamente via github actions &nbsp;·&nbsp; 12 repositórios
   </footer>
 
   <!-- MODAL -->
@@ -294,6 +304,62 @@
 
   <script>
     const readmes = {
+  "centralizador-vercel": `﻿# centralizador-vercel
+`,
+  "centralizador-simples": `# 🗂️ Centralizador de Projetos (Versão Simples)
+
+![Status](https://img.shields.io/badge/Status-Concluído-green)
+![Python](https://img.shields.io/badge/Python-3.10%2B-blue)
+![Streamlit](https://img.shields.io/badge/Streamlit-Nativo-red)
+
+Vitrine minimalista dos meus projetos, construída de forma leve utilizando os componentes nativos do Streamlit. Sem necessidade de banco de dados, integrações com APIs ou gestão de tokens.
+
+## ✨ Funcionalidades
+
+- **Cards Nativos:** Visual limpo em formato de quadros utilizando \`st.container(border=True)\`.
+- **Informações Diretas:** Exibição focada no que importa: logo/imagem, título, integrantes e links rápidos para o repositório e deploy.
+- **Carregamento Instantâneo:** Dados lidos diretamente da memória, sem tempo de espera de requisições web.
+
+## 📁 Estrutura
+
+\`\`\`text
+.
+├── app.py             # Aplicação Streamlit contendo também a lista de projetos
+├── requirements.txt   # Dependências (apenas streamlit)
+└── README.md
+\`\`\`
+
+## 🚀 Executando localmente
+
+\`\`\`bash
+git clone https://github.com/emersonaparecidosilva/centralizador-simples.git
+cd centralizador-simples
+
+python -m venv .venv
+# Windows: .venv\\Scripts\\activate
+# Linux/macOS: source .venv/bin/activate
+
+pip install -r requirements.txt
+streamlit run app.py
+\`\`\`
+
+## ➕ Adicionando novos projetos
+
+Toda a gestão é feita diretamente no código. Para adicionar, remover ou editar um projeto, basta alterar a lista \`projetos\` dentro do arquivo \`app.py\`:
+
+\`\`\`python
+{
+    "nome": "Novo Projeto",
+    "integrantes": ["Emerson Silva"],
+    "repo": "https://github.com/emersonaparecidosilva/novo-projeto",
+    "link_externo": "https://link-do-deploy.app",
+    "imagem": "https://raw.githubusercontent.com/..." # ou caminho local como "assets/logo.png"
+}
+\`\`\`
+
+## 🛠️ Tecnologias
+
+[Python](https://www.python.org/) · [Streamlit](https://streamlit.io/)`,
   "dontpad": `# 📝 Padeas — Bloco de Notas Web Minimalista
 
 Um bloco de notas online instantâneo e sem necessidade de login (inspirado no Dontpad), construído com **Python (Flask)**, **Vercel Serverless Functions** e **MongoDB Atlas**.
@@ -401,60 +467,6 @@ Caso queira testar ou modificar o código no seu computador antes de enviar para
    flask --app api/index run --debug
    \`\`\`
 4. Acesse \`http://127.0.0.1:5000\` no navegador.`,
-  "centralizador-simples": `# 🗂️ Centralizador de Projetos (Versão Simples)
-
-![Status](https://img.shields.io/badge/Status-Concluído-green)
-![Python](https://img.shields.io/badge/Python-3.10%2B-blue)
-![Streamlit](https://img.shields.io/badge/Streamlit-Nativo-red)
-
-Vitrine minimalista dos meus projetos, construída de forma leve utilizando os componentes nativos do Streamlit. Sem necessidade de banco de dados, integrações com APIs ou gestão de tokens.
-
-## ✨ Funcionalidades
-
-- **Cards Nativos:** Visual limpo em formato de quadros utilizando \`st.container(border=True)\`.
-- **Informações Diretas:** Exibição focada no que importa: logo/imagem, título, integrantes e links rápidos para o repositório e deploy.
-- **Carregamento Instantâneo:** Dados lidos diretamente da memória, sem tempo de espera de requisições web.
-
-## 📁 Estrutura
-
-\`\`\`text
-.
-├── app.py             # Aplicação Streamlit contendo também a lista de projetos
-├── requirements.txt   # Dependências (apenas streamlit)
-└── README.md
-\`\`\`
-
-## 🚀 Executando localmente
-
-\`\`\`bash
-git clone https://github.com/emersonaparecidosilva/centralizador-simples.git
-cd centralizador-simples
-
-python -m venv .venv
-# Windows: .venv\\Scripts\\activate
-# Linux/macOS: source .venv/bin/activate
-
-pip install -r requirements.txt
-streamlit run app.py
-\`\`\`
-
-## ➕ Adicionando novos projetos
-
-Toda a gestão é feita diretamente no código. Para adicionar, remover ou editar um projeto, basta alterar a lista \`projetos\` dentro do arquivo \`app.py\`:
-
-\`\`\`python
-{
-    "nome": "Novo Projeto",
-    "integrantes": ["Emerson Silva"],
-    "repo": "https://github.com/emersonaparecidosilva/novo-projeto",
-    "link_externo": "https://link-do-deploy.app",
-    "imagem": "https://raw.githubusercontent.com/..." # ou caminho local como "assets/logo.png"
-}
-\`\`\`
-
-## 🛠️ Tecnologias
-
-[Python](https://www.python.org/) · [Streamlit](https://streamlit.io/)`,
   "aulas-guanabara-python": `# 🐍 Navegador de Exercícios - Curso de Python
 
 Bem-vindo ao repositório de exercícios práticos! Para facilitar a navegação e a execução de cada um dos desafios de código, desenvolvemos dois gerenciadores de acesso: um **Modo Terminal** e um **Modo Interface Gráfica**.
